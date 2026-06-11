@@ -20,6 +20,17 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+    public function index(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+                return match ($user->role) {
+                    'admin' => view('admin.dashboard'),
+                    'staff' => view('staff.dashboard'),
+                    default => abort(403),
+                };
+        }
+    }
 
     /**
      * Update the user's profile information.
