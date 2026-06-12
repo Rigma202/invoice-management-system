@@ -20,6 +20,7 @@
         <tr>
             <th>Name</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Description</th>
             <th>Action</th>
         </tr>
@@ -33,6 +34,8 @@
             <td>{{ $product->name }}</td>
 
             <td>₹{{ number_format($product->price,2) }}</td>
+
+            <td>{{ $product->quantity }}</td>
 
             <td>{{ $product->description }}</td>
 

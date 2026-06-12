@@ -2,64 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
-use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Services\InvoiceService;
+use App\Http\Requests\InvoiceRequest;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected InvoiceService $invoiceService
+    ) {}
+
     public function index()
     {
-        //
+        $invoices = $this->invoiceService->getAll();
+
+        return view('invoice.index', compact('invoices'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $data = $this->invoiceService->getData();
+        return view('invoice.create', $data);
+    }
+    public function store(InvoiceRequest $request)
+    {
+        $result = $this->invoiceService->store(
+            $request->validated()
+        );
+
+        if (!$result['status']) {
+            return response()->json([
+                'status' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => $result['message']
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function edit($id)
     {
-        //
+        $invoice = $this->invoiceService->find($id);
+
+        $customers = Customer::orderBy('name')->get();
+        $products = Product::orderBy('name')->get();
+
+        return view('invoice.edit', compact('invoice', 'customers', 'products'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Invoice $invoice)
+    public function update(InvoiceRequest $request, $id)
     {
-        //
+        $this->invoiceService->update(
+            $id,
+            $request->validated()
+        );
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Invoice updated successfully'
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Invoice $invoice)
+    public function destroy($id)
     {
-        //
-    }
+        $this->invoiceService->delete($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Invoice $invoice)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Invoice $invoice)
-    {
-        //
+        return redirect()->route('invoices.index');
     }
 }
