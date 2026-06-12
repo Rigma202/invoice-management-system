@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\Customer;
+use Carbon\Carbon;
 
 class InvoiceService
 {
@@ -38,6 +39,11 @@ class InvoiceService
         $data['unit_price'] = $product->price;
         $data['total_amount'] = $product->price * $data['quantity'];
 
+        if ( now()->gt($data['due_date'])) {
+            $data['status'] = 'overdue';
+        }else{
+            $data['status'] = 'sent';
+        }
         $invoice = Invoice::create($data);
 
         $product->decrement('quantity', $data['quantity']);
@@ -56,6 +62,15 @@ class InvoiceService
         $newProduct = Product::findOrFail($data['product_id']);
         $oldQuantity = $invoice->quantity;
         $newQuantity = $data['quantity'];
+        if (isset($data['status']) && $data['status'] === 'overdue') {
+            $dueDate = Carbon::parse($data['due_date']);
+            if ($dueDate->isFuture()) {
+                return [
+                    'status'  => false,
+                    'message' => "Cannot mark as overdue. Due date ({$dueDate->format('d M Y')}) has not passed yet."
+                ];
+            }
+        }
 
         if ($oldProduct->id === $newProduct->id) {
 

@@ -12,7 +12,7 @@ class Invoice extends Model
 
     protected $fillable = [
         'customer_id', 'product_id', 'invoice_date',
-        'due_date', 'quantity', 'unit_price', 'total_amount'
+        'due_date', 'quantity', 'unit_price', 'total_amount' ,'status'
     ];
 
     protected $casts = [

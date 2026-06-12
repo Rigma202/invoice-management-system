@@ -19,6 +19,7 @@ class UpdateInvoiceRequest extends FormRequest
             'quantity'     => 'required|integer|min:1',
             'invoice_date' => 'required|date',
             'due_date'     => 'required|date|after_or_equal:invoice_date',
+            'status'       => 'required|in:sent,paid,overdue'
         ];
     }
 

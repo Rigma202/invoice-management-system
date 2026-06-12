@@ -26,6 +26,7 @@
             <th>Total</th>
             <th>Invoice Date</th>
             <th>Due Date</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -52,6 +53,7 @@
 
             <td>{{ $invoice->due_date->format('d-m-Y') }}</td>
 
+            <td>{{ ucfirst($invoice->status) }}</td>
             <td>
 
                 <a href="{{ route('invoices.edit', $invoice->id) }}"

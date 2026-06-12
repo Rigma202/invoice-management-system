@@ -37,7 +37,8 @@ $(document).ready(function () {
                 product_id:   $('#product_id').val(),
                 invoice_date: $('#invoice_date').val(),
                 due_date:     $('#due_date').val(),
-                quantity:     $('#quantity').val()
+                quantity:     $('#quantity').val(),
+                status:       $('#status').val()
             },
 
             headers: {

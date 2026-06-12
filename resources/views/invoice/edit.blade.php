@@ -95,9 +95,41 @@
 
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Total Amount</label>
-                            <input type="text" id="total_amount" class="form-control fw-bold" readonly>
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Total Amount</label>
+                                <input type="text"
+                                    id="total_amount"
+                                    class="form-control fw-bold"
+                                    readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Status</label>
+
+                                <select id="status"
+                                        name="status"
+                                        class="form-select">
+                                    <option value="sent"
+                                        {{ $invoice->status == 'sent' ? 'selected' : '' }}>
+                                        Sent
+                                    </option>
+
+                                    <option value="paid"
+                                        {{ $invoice->status == 'paid' ? 'selected' : '' }}>
+                                        Paid
+                                    </option>
+
+                                    <option value="overdue"
+                                        {{ $invoice->status == 'overdue' ? 'selected' : '' }}>
+                                        Overdue
+                                    </option>
+                                </select>
+
+                                <small id="status_error" class="text-danger"></small>
+                            </div>
+
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">
