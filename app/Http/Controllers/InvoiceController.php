@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Services\InvoiceService;
 use App\Http\Requests\InvoiceRequest;
+use App\Http\Requests\UpdateInvoiceRequest;
 
 class InvoiceController extends Controller
 {
@@ -54,16 +55,20 @@ class InvoiceController extends Controller
         return view('invoice.edit', compact('invoice', 'customers', 'products'));
     }
 
-    public function update(InvoiceRequest $request, $id)
+    public function update(UpdateInvoiceRequest $request, $id)
     {
-        $this->invoiceService->update(
-            $id,
-            $request->validated()
-        );
+        $result = $this->invoiceService->update($id, $request->validated());
+
+        if (!$result['status']) {
+            return response()->json([
+                'status'  => false,
+                'message' => $result['message']
+            ], 422);
+        }
 
         return response()->json([
-            'status' => true,
-            'message' => 'Invoice updated successfully'
+            'status'  => true,
+            'message' => $result['message']
         ]);
     }
 

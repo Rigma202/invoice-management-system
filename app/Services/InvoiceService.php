@@ -49,22 +49,38 @@ class InvoiceService
         ];
     }
 
-    public function update($id,array $data)
+    public function update($id, array $data)
     {
         $invoice = Invoice::findOrFail($id);
+        $product = Product::findOrFail($data['product_id']);
 
-        $product = Product::findOrFail(
-            $data['product_id']
-        );
+        $oldQuantity = $invoice->quantity;
+        $newQuantity = $data['quantity'];
+        $quantityDiff = $newQuantity - $oldQuantity;
 
-        $data['unit_price'] = $product->price;
+        if ($quantityDiff > 0 && $product->quantity < $quantityDiff) {
+            return [
+                'status'  => false,
+                'message' => "Insufficient stock. Available stock: {$product->quantity}"
+            ];
+        }
 
-        $data['total_amount'] =
-            $product->price * $data['quantity'];
+        $data['unit_price']    = $product->price;
+        $data['total_amount']  = $product->price * $newQuantity;
 
         $invoice->update($data);
 
-        return $invoice;
+        if ($quantityDiff > 0) {
+            $product->decrement('quantity', $quantityDiff);
+        } elseif ($quantityDiff < 0) {
+            $product->increment('quantity', abs($quantityDiff));
+        }
+
+        return [
+            'status'  => true,
+            'message' => 'Invoice updated successfully.',
+            'invoice' => $invoice
+        ];
     }
 
     public function delete($id)
