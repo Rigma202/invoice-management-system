@@ -49,37 +49,50 @@ class InvoiceService
         ];
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): array
     {
-        $invoice = Invoice::findOrFail($id);
-        $product = Product::findOrFail($data['product_id']);
-
+        $invoice    = Invoice::findOrFail($id);
+        $oldProduct = Product::findOrFail($invoice->product_id);
+        $newProduct = Product::findOrFail($data['product_id']);
         $oldQuantity = $invoice->quantity;
         $newQuantity = $data['quantity'];
-        $quantityDiff = $newQuantity - $oldQuantity;
 
-        if ($quantityDiff > 0 && $product->quantity < $quantityDiff) {
-            return [
-                'status'  => false,
-                'message' => "Insufficient stock. Available stock: {$product->quantity}"
-            ];
+        if ($oldProduct->id === $newProduct->id) {
+
+            $diff = $newQuantity - $oldQuantity;
+
+            if ($diff > 0 && $newProduct->quantity < $diff) {
+                return [
+                    'status'  => false,
+                    'message' => "Insufficient stock. Available stock: {$newProduct->quantity}"
+                ];
+            }
+
+            if ($diff > 0) $newProduct->decrement('quantity', $diff);
+            if ($diff < 0) $newProduct->increment('quantity', abs($diff));
+
+        } else {
+
+            if ($newProduct->quantity < $newQuantity) {
+                return [
+                    'status'  => false,
+                    'message' => "Insufficient stock. Available stock: {$newProduct->quantity}"
+                ];
+            }
+
+            $oldProduct->increment('quantity', $oldQuantity);
+            $newProduct->decrement('quantity', $newQuantity);
         }
 
-        $data['unit_price']    = $product->price;
-        $data['total_amount']  = $product->price * $newQuantity;
+        $data['unit_price']   = $newProduct->price;
+        $data['total_amount'] = $newProduct->price * $newQuantity;
 
         $invoice->update($data);
-
-        if ($quantityDiff > 0) {
-            $product->decrement('quantity', $quantityDiff);
-        } elseif ($quantityDiff < 0) {
-            $product->increment('quantity', abs($quantityDiff));
-        }
 
         return [
             'status'  => true,
             'message' => 'Invoice updated successfully.',
-            'invoice' => $invoice
+            'invoice' => $invoice->fresh()
         ];
     }
 

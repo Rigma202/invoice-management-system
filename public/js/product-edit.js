@@ -14,6 +14,7 @@ $(document).ready(function () {
             data: {
                 name: $('#name').val(),
                 price: $('#price').val(),
+                quantity: $('#quantity').val(),
                 description: $('#description').val()
             },
             headers: {

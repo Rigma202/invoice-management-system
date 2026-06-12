@@ -36,7 +36,18 @@
 
                             <small id="name_error" class="text-danger"></small>
                         </div>
+                        <div class="mb-2">
+                            <label class="form-label">Quantity</label>
 
+                            <input type="number"
+                                id="quantity"
+                                name="quantity"
+                                class="form-control"
+                                min="0"
+                                value="{{ $product->quantity }}">
+
+                            <small id="quantity_error" class="text-danger"></small>
+                        </div>
                         <div class="mb-2">
                             <label class="form-label">Price</label>
 

@@ -27,7 +27,7 @@ class ProductStoreRequest extends FormRequest
             'name.required' => 'Product name is required.',
             'price.required' => 'Price is required.',
             'price.numeric' => 'Price must be numeric.',
-            'quantity.min' => 'Qantity cannot be negative.',
+            'quantity.min' => 'Quantity cannot be negative.',
         ];
     }
 }

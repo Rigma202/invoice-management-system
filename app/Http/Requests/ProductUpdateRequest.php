@@ -26,6 +26,7 @@ class ProductUpdateRequest extends FormRequest
             'name.required' => 'Product name is required.',
             'price.required' => 'Price is required.',
             'price.numeric' => 'Price must be numeric.',
+            'quantity.min' => 'Quantity cannot be negative.',
         ];
     }
 }
