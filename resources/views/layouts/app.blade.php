@@ -56,13 +56,13 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="" class="nav-link text-white">
+                        <a href="{{ route('products.index') }}" class="nav-link text-white">
                             Products
                         </a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="" class="nav-link text-white">
-                            Daily Analysis
+                            Invoice
                         </a>
                     </li>
                     @endif
