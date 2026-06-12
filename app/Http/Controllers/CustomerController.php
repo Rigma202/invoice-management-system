@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-
+use App\Services\CustomerService;
+use App\Http\Requests\CustomerStoreRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $customerService;
+
+    public function __construct(CustomerService $customerService)
+    {
+        $this->customerService = $customerService;
+    }
+
     public function index()
     {
-        //
+        $customers = $this->customerService->getAll();
+
+        return view('customer.index', compact('customers'));
     }
 
     /**
@@ -20,46 +28,57 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerStoreRequest $request)
     {
-        //
+
+        $this->customerService->store($request->validated());
+        return response()->json([
+            'status' => true,
+            'message' => 'Customer created successfully'
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(int $id)
     {
-        //
+        $customer = $this->customerService->find($id);
+        return view('customer.edit',compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(CustomerUpdateRequest $request, Customer $customer)
     {
-        //
+        $this->customerService->update(
+            $customer->id,
+            $request->validated()
+        );
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Customer updated successfully'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        //
+        $this->customerService->delete($id);
+
+        return redirect()
+            ->route('customers.index')
+            ->with('success', 'Customer deleted successfully');
     }
 }
