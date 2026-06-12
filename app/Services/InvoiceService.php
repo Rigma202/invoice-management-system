@@ -6,6 +6,8 @@ use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\Customer;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
 
 class InvoiceService
 {
@@ -48,6 +50,7 @@ class InvoiceService
 
         $product->decrement('quantity', $data['quantity']);
 
+        Mail::to($invoice->customer->email)->queue(new InvoiceMail($invoice));
         return [
             'status' => true,
             'message' => 'Invoice created successfully.',
