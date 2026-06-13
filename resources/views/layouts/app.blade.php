@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="" class="nav-link text-white">
+                    <a href="{{ route('staff.index') }}" class="nav-link text-white">
                         Manage Staff
                     </a>
                 </li>

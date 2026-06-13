@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\StaffController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('customers', CustomerController::class);
     Route::resource('products', ProductController::class);
     Route::resource('invoices', InvoiceController::class);
+    Route::resource('staff', StaffController::class);
 
 });
 
