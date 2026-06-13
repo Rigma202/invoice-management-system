@@ -11,7 +11,7 @@
     </a>
 
 </div>
-<table class="table" id="customerTable">
+<table id="customerTable" class="table table-dark-green">
 
     <thead>
         <tr>

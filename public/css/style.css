@@ -6,7 +6,7 @@
 
 table.table-light-brown thead tr th {
     background-color: #C19A6B;
-    color: white;
+    color: rgb(124, 27, 27);
     border-color: #b8895a;
 }
 
@@ -53,7 +53,7 @@ table.table-light-brown.dataTable tbody tr.even td {
 }
 
 .invoice-section-title {
-    color: #6c757d;
+    color: #b91919;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 15px;
@@ -95,4 +95,51 @@ table.table-light-brown.dataTable tbody tr.even td {
 .status-sent {
     background-color: #fff3cd;
     color: #664d03;
+}
+
+
+table.table-light-yellow thead th {
+    background-color: #dec87a !important;
+    color: #333 !important;
+}
+
+table.table-light-yellow tbody tr:nth-child(even) {
+    background-color: #FFF8DC;
+}
+
+table.table-light-yellow tbody tr:hover {
+    background-color: #FFF3B0;
+}
+
+table.table-light-yellow {
+    border: 1px solid #FFE69C;
+    border-radius: 12px;
+    overflow: hidden;
+}
+table.table-light-yellow thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+table.table-light-yellow thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+
+.table-dark-green {
+    border: 1px solid #2D6A4F;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-dark-green thead th {
+    background-color: #2D6A4F !important;
+    color: white !important;
+}
+
+.table-dark-green tbody tr:nth-child(even) {
+    background-color: #F1F8F4;
+}
+
+.table-dark-green tbody tr:hover {
+    background-color: #D8F3DC;
 }

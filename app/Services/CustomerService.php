@@ -2,6 +2,11 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\User;
+use App\Mail\CustomerCredentialsMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CustomerService
 {
@@ -17,7 +22,18 @@ class CustomerService
 
     public function store(array $data)
     {
-        return Customer::create($data);
+            $customer = Customer::create($data);
+            $password = Str::random(10);
+
+            User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'role'     => 'customer',
+                'password' => Hash::make($password),
+            ]);
+            Mail::to($customer->email)->queue(new CustomerCredentialsMail($customer, $password));
+
+            return $customer;
     }
 
     public function update($id, array $data)

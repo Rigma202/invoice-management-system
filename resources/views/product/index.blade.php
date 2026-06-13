@@ -14,7 +14,7 @@
 
 </div>
 
-<table class="table" id="productTable">
+<table id="productTable" class="table table-light-yellow">
 
     <thead>
         <tr>
