@@ -1,129 +1,100 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 
-@section('content')
+    @section('content')
+    <div class="d-flex justify-content-between align-items-center mb-3">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Invoices</h4>
 
-    <h4>Invoices</h4>
+        <a href="{{ route('invoices.create') }}"
+        class="btn text-white"
+        style="background-color:#C19A6B;">
+            + Create Invoice
+        </a>
 
-    <a href="{{ route('invoices.create') }}"
-       class="btn text-white"
-       style="background-color:#C19A6B;">
-        + Create Invoice
-    </a>
+    </div>
 
-</div>
+    <table id="invoiceTable" class="table table-light-brown">
 
-<table class="table" id="invoiceTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Invoice Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Customer</th>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Total</th>
-            <th>Invoice Date</th>
-            <th>Due Date</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
+        <tbody>
 
-    <tbody>
+            @foreach($invoices as $invoice)
 
-        @foreach($invoices as $invoice)
+            <tr>
 
-        <tr>
+                <td>{{ $invoice->id }}</td>
 
-            <td>{{ $invoice->id }}</td>
+                <td>{{ $invoice->customer->name }}</td>
 
-            <td>{{ $invoice->customer->name }}</td>
+                <td>₹{{ number_format($invoice->total_amount, 2) }}</td>
 
-            <td>{{ $invoice->product->name }}</td>
+                <td>{{ $invoice->invoice_date->format('d-m-Y') }}</td>
 
-            <td>{{ $invoice->quantity }}</td>
+                <td>{{ $invoice->due_date->format('d-m-Y') }}</td>
 
-            <td>₹{{ number_format($invoice->unit_price, 2) }}</td>
-
-            <td>₹{{ number_format($invoice->total_amount, 2) }}</td>
-
-            <td>{{ $invoice->invoice_date->format('d-m-Y') }}</td>
-
-            <td>{{ $invoice->due_date->format('d-m-Y') }}</td>
-
-            <td>{{ ucfirst($invoice->status) }}</td>
-            <td>
-
-                <a href="{{ route('invoices.edit', $invoice->id) }}"
-                   class="btn btn-warning btn-sm">
-                    Edit
-                </a>
-
-                <form method="POST"
-                      action="{{ route('invoices.destroy', $invoice->id) }}"
-                      class="d-inline delete-form"
-                      data-invoice-id="{{ $invoice->id }}">
-
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit"
-                            class="btn btn-danger btn-sm">
-                        Delete
+                <td>{{ ucfirst($invoice->status) }}</td>
+                <td>
+                    <button
+                        type="button"
+                        class="btn btn-sm view-invoice text-white"
+                        style="background-color:#C19A6B;"
+                        data-id="{{ $invoice->id }}">
+                        View
                     </button>
+                    <a href="{{ route('invoices.edit', $invoice->id) }}"
+                    class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
 
-                </form>
+                    <form method="POST"
+                        action="{{ route('invoices.destroy', $invoice->id) }}"
+                        class="d-inline delete-form"
+                        data-invoice-id="{{ $invoice->id }}">
 
-            </td>
+                        @csrf
+                        @method('DELETE')
 
-        </tr>
+                        <button type="submit"
+                                class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
 
-        @endforeach
+                    </form>
 
-    </tbody>
+                </td>
 
-</table>
+            </tr>
 
-@endsection
+            @endforeach
 
-@push('scripts')
+        </tbody>
 
-<script>
+    </table>
 
-$(document).ready(function () {
+<div class="modal fade" id="invoiceModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
 
-    $('#invoiceTable').DataTable();
 
-    $('.delete-form').on('submit', function(e){
+            <div class="modal-body" id="invoiceDetails">
+                Loading...
+            </div>
 
-        e.preventDefault();
+        </div>
+    </div>
+</div>
+    @endsection
 
-        let form = this;
-
-        let invoiceId = $(this).data('invoice-id');
-
-        Swal.fire({
-            title: 'Delete Invoice?',
-            text: 'Are you sure you want to delete Invoice #' + invoiceId + '?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Yes, Delete'
-        }).then((result) => {
-
-            if(result.isConfirmed){
-                form.submit();
-            }
-
-        });
-
-    });
-
-});
-
-</script>
-
-@endpush
+    @push('scripts')
+    <script src="{{ asset('js/invoice.js') }}"></script>
+    @endpush

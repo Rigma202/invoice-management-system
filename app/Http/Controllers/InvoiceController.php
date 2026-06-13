@@ -44,7 +44,11 @@ class InvoiceController extends Controller
             'message' => $result['message']
         ]);
     }
-
+    public function show($id)
+    {
+        $invoice = $this->invoiceService->find($id);
+        return view('invoice.partials.detail',compact('invoice'));
+    }
     public function edit($id)
     {
         $invoice = $this->invoiceService->find($id);

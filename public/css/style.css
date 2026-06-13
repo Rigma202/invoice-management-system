@@ -1,0 +1,98 @@
+
+:root {
+    --dt-row-hover: 0, 0, 0;
+    --dt-row-stripe: 0, 0, 0;
+}
+
+table.table-light-brown thead tr th {
+    background-color: #C19A6B;
+    color: white;
+    border-color: #b8895a;
+}
+
+table.table-light-brown tbody tr td {
+    background-color: #fdf6ee;
+}
+
+table.table-light-brown tbody tr:hover td {
+    background-color: #f0dfc0 !important;
+}
+
+
+table.table-light-brown.dataTable tbody tr.odd td {
+    background-color: #fdf6ee;
+}
+
+table.table-light-brown.dataTable tbody tr.even td {
+    background-color: #f5e6d3;
+}
+.invoice-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.invoice-card-header {
+    background-color: #C19A6B;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+.invoice-card-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.invoice-section {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100%;
+    background-color: #fff;
+}
+
+.invoice-section-title {
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.invoice-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.invoice-value {
+    color: #212529;
+}
+
+.invoice-total {
+    color: #198754;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-paid {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-overdue {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.status-sent {
+    background-color: #fff3cd;
+    color: #664d03;
+}

@@ -93,3 +93,66 @@ $(document).ready(function () {
     calculateTotal();
 
 });
+
+    $(document).ready(function () {
+
+        $('#invoiceTable').DataTable();
+
+        $('.delete-form').on('submit', function(e){
+
+            e.preventDefault();
+
+            let form = this;
+
+            let invoiceId = $(this).data('invoice-id');
+
+            Swal.fire({
+                title: 'Delete Invoice?',
+                text: 'Are you sure you want to delete Invoice #' + invoiceId + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Delete'
+            }).then((result) => {
+
+                if(result.isConfirmed){
+                    form.submit();
+                }
+
+            });
+
+        });
+
+    });
+$('.view-invoice').click(function () {
+
+    let invoiceId = $(this).data('id');
+
+    $.ajax({
+        url: '/invoices/' + invoiceId,
+        type: 'GET',
+
+        success: function(response) {
+
+            $('#invoiceDetails').html(response);
+
+            let modal = new bootstrap.Modal(
+                document.getElementById('invoiceModal')
+            );
+
+            modal.show();
+        },
+
+        error: function() {
+
+            Swal.fire(
+                'Error',
+                'Unable to load invoice details',
+                'error'
+            );
+
+        }
+    });
+
+});
