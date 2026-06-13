@@ -116,7 +116,21 @@ class InvoiceService
 
     public function delete($id)
     {
-        return Invoice::findOrFail($id)->delete();
+        $invoice = Invoice::findOrFail($id);
+
+        if ($invoice->status === 'rejected') {
+
+            $product = Product::find($invoice->product_id);
+
+            if ($product) {
+                $product->increment(
+                    'quantity',
+                    $invoice->quantity
+                );
+            }
+        }
+
+        return $invoice->delete();
     }
     public function getData()
     {

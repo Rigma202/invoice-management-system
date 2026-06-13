@@ -156,3 +156,9 @@ $('.view-invoice').click(function () {
     });
 
 });
+$(document).on('click', '.view-reason', function () {
+
+    let reason = $(this).data('reason');
+    $('#rejectionReasonText').text(reason);
+
+});

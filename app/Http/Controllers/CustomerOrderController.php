@@ -43,17 +43,22 @@ class CustomerOrderController extends Controller
         ]);
     }
 
-    public function rejectOrder($id)
+    public function rejectOrder(Request $request, $id)
     {
+        $request->validate([
+            'rejection_reason' => 'required|string|max:500'
+        ]);
+
         $invoice = Invoice::findOrFail($id);
 
         $invoice->update([
-            'status' => 'rejected'
+            'status' => 'rejected',
+            'rejection_reason' => $request->rejection_reason,
         ]);
 
         return response()->json([
             'status' => true,
-            'message' => 'The staff will be notified regarding your order rejection.'
+            'message' => 'Order rejected successfully.'
         ]);
     }
 }

@@ -4,7 +4,7 @@
 
 <div class="container">
 
-    <h4 class="mb-3">My Orders</h4>
+    <h4 class="mb-2">My Orders</h4>
 
 <table id="ordersTable" class="table table-orange">
 
@@ -78,7 +78,55 @@
         </tbody>
 
     </table>
+    <div class="modal fade" id="rejectModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <h5>Reject Order</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden" id="reject_order_id">
+
+                    <label class="form-label">
+                        Reason for rejection
+                    </label>
+
+                    <textarea id="rejection_reason"
+                            class="form-control"
+                            rows="4"></textarea>
+
+                    <small id="rejection_reason_error"
+                        class="text-danger">
+                    </small>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-danger"
+                            id="submitReject">
+                        Reject Order
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

@@ -27,41 +27,45 @@ $(document).on('click', '.acceptOrder', function () {
 
 $(document).on('click', '.rejectOrder', function () {
 
-    let button = $(this);
-    let id = button.data('id');
+    $('#reject_order_id').val($(this).data('id'));
+    $('#rejection_reason').val('');
+    $('#rejectModal').modal('show');
+});
 
-    Swal.fire({
-        title: 'Reject Order?',
-        text: 'Are you sure you want to reject this order?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, Reject'
-    }).then((result) => {
 
-        if (!result.isConfirmed) {
-            return;
-        }
+$('#submitReject').click(function () {
 
-        $.ajax({
-            url: '/orders/' + id + '/reject',
-            type: 'PATCH',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
+    let id = $('#reject_order_id').val();
 
-            success: function (response) {
+    $.ajax({
+        url: '/orders/' + id + '/reject',
+        type: 'PATCH',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            rejection_reason: $('#rejection_reason').val()
+        },
 
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Order Rejected',
-                    text: response.message
-                }).then(() => {
-                    location.reload();
-                });
+        success: function (response) {
 
+            Swal.fire(
+                'Success',
+                response.message,
+                'success'
+            ).then(() => {
+                location.reload();
+            });
+
+        },
+
+        error: function (xhr) {
+
+            let errors = xhr.responseJSON.errors;
+
+            if(errors.rejection_reason){
+                $('#rejection_reason_error')
+                    .text(errors.rejection_reason[0]);
             }
-        });
-
+        }
     });
 
 });
