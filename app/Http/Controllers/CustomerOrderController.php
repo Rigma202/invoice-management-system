@@ -10,13 +10,25 @@ class CustomerOrderController extends Controller
     public function index()
     {
         $customer = auth()->user()->customer;
-        $orders = Invoice::with(['product'])
+        $orders = Invoice::with('product')
             ->where('customer_id', $customer->id)
+            ->where('status', 'sent')
             ->latest()
             ->get();
         return view('customer-login.orders', compact('orders'));
     }
+    public function history()
+    {
+        $customer = auth()->user()->customer;
 
+        $orders = Invoice::with('product')
+            ->where('customer_id', $customer->id)
+            ->whereIn('status', ['completed', 'rejected'])
+            ->latest()
+            ->get();
+
+        return view('customer-login.history', compact('orders'));
+    }
     public function acceptOrder($id)
     {
         $invoice = Invoice::findOrFail($id);

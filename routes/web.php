@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('orders', [CustomerOrderController::class, 'index']) ->name('orders');
     Route::patch('/orders/{id}/accept-order', [CustomerOrderController::class, 'acceptOrder'])->name('orders.acceptorder');
     Route::patch('/orders/{id}/reject', [CustomerOrderController::class, 'rejectOrder'])->name('orders.reject');
+    Route::get('/history', [CustomerOrderController::class, 'history'])->name('history');
 
 });
 

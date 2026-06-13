@@ -154,3 +154,128 @@ table.table-light-yellow thead th:last-child {
     background-color: rgba(193, 154, 107, 0.3);
     border-radius: 6px;
 }
+
+
+.table-orange {
+    border: 1px solid #e7c9a9;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+table.table-orange.dataTable thead th,
+table.table-orange thead th {
+    background-color: #C19A6B !important;
+    color: #ffffff !important;
+    border-color: #b5875a !important;
+    font-weight: 600;
+    padding: 14px;
+    white-space: nowrap;
+}
+
+
+table.table-orange.dataTable tbody tr td,
+table.table-orange tbody tr td {
+    background-color: #fdf6ee;
+    vertical-align: middle;
+    padding: 12px;
+    border-color: #ead8c3;
+}
+
+table.table-orange.dataTable tbody tr.even td {
+    background-color: #fff8f1;
+}
+
+table.table-orange.dataTable tbody tr.odd td {
+    background-color: #fdf6ee;
+}
+
+
+table.table-orange.dataTable tbody tr:hover td {
+    background-color: #f0dfc0 !important;
+    transition: all 0.2s ease;
+}
+
+
+table.table-orange.dataTable thead .sorting,
+table.table-orange.dataTable thead .sorting_asc,
+table.table-orange.dataTable thead .sorting_desc {
+    color: #ffffff !important;
+}
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #C19A6B !important;
+    border-color: #C19A6B !important;
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #b5875a !important;
+    border-color: #b5875a !important;
+    color: white !important;
+}
+
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #d9b893;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #d9b893;
+    border-radius: 6px;
+}
+
+
+.status-confirmed {
+    background: #d1f7df;
+    color: #0f7a39;
+    border: 1px solid #7ed9a2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+
+.status-rejected {
+    background: #fde2e2;
+    color: #b42318;
+    border: 1px solid #f5a3a3;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+
+.acceptOrder {
+    background-color: #198754 !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 6px 14px;
+}
+
+.acceptOrder:hover {
+    background-color: #157347 !important;
+}
+
+
+.rejectOrder {
+    font-weight: 600;
+    padding: 6px 14px;
+}
+
+table.table-orange thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+table.table-orange thead th:last-child {
+    border-top-right-radius: 12px;
+}

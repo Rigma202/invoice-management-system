@@ -81,9 +81,10 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="" class="nav-link text-white">
-                            History
-                        </a>
+                    <a href="{{ route('history') }}"
+                    class="nav-link text-white ">
+                        History
+                    </a>
                     </li>
                 </ul>
                 @endif

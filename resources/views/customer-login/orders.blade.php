@@ -6,7 +6,7 @@
 
     <h4 class="mb-3">My Orders</h4>
 
-    <table id="ordersTable" class="table table-striped table-bordered">
+<table id="ordersTable" class="table table-orange">
 
         <thead>
             <tr>
@@ -42,20 +42,20 @@
 
                     @if($order->status === 'completed')
 
-                        <span class="badge bg-success">
+                        <span class="status-confirmed">
                             Order Confirmed
                         </span>
 
                     @elseif($order->status === 'rejected')
 
-                        <span class="badge bg-danger">
-                            Order Rejected
+                        <span class="status-rejected">
+                             Order Rejected
                         </span>
 
                     @else
 
                         <button
-                            class="btn btn-success btn-sm acceptOrder"
+                            class="btn acceptOrder text-white btn-sm"
                             data-id="{{ $order->id }}">
                             Accept Order
                         </button>
@@ -70,6 +70,7 @@
 
                 </td>
 
+                </td>
             </tr>
 
             @endforeach
