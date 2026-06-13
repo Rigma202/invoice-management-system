@@ -65,7 +65,7 @@
 
                     <button
                         type="button"
-                        class="btn btn-info btn-sm view-reason"
+                        class="btn btn-sm view-reason-btn view-reason"
                         data-bs-toggle="modal"
                         data-bs-target="#reasonModal"
                         data-reason="{{ $invoice->rejection_reason }}">

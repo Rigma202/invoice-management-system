@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
-
+use App\Models\Invoice;
 class ProductService
 {
     public function getAll()
@@ -30,10 +30,34 @@ class ProductService
         return $product;
     }
 
-    public function delete($id)
+
+
+    public function delete($id, $force = false)
     {
         $product = Product::findOrFail($id);
 
-        return $product->delete();
+        $pendingInvoices = Invoice::where('product_id', $id)
+            ->where('status', 'sent')
+            ->get();
+
+        if ($pendingInvoices->count() && !$force) {
+
+            return [
+                'status' => false,
+                'hasInvoices' => true,
+                'invoices' => $pendingInvoices
+            ];
+        }
+
+        Invoice::where('product_id', $id)
+            ->where('status', 'sent')
+            ->delete();
+
+        $product->delete();
+
+        return [
+            'status' => true,
+            'message' => 'Product deleted successfully'
+        ];
     }
 }

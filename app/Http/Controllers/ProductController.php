@@ -6,6 +6,7 @@ use App\Services\ProductService;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -60,12 +61,13 @@ class ProductController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $this->productService->delete($id);
+        $result = $this->productService->delete(
+            $id,
+            $request->force_delete ?? false
+        );
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', 'Product deleted successfully');
+        return response()->json($result);
     }
 }

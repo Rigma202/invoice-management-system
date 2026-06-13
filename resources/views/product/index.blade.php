@@ -76,36 +76,101 @@
 
 <script>
 
-$(document).ready(function () {
+$(document).on('submit', '.delete-form', function(e){
 
-    $('#productTable').DataTable();
+    e.preventDefault();
 
-    $('.delete-form').on('submit', function(e){
+    let form = $(this);
+    let url  = form.attr('action');
 
-        e.preventDefault();
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
 
-        let form = this;
+        success: function(response){
 
-        let productName = $(this).data('product-name');
+            if(response.hasInvoices){
 
-        Swal.fire({
-            title: 'Delete Product?',
-            text: 'Are you sure you want to delete "' + productName + '"?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, Delete'
-        }).then((result) => {
+                let invoiceList = '';
 
-            if(result.isConfirmed){
-                form.submit();
+                response.invoices.forEach(function(invoice){
+
+                    invoiceList +=
+                        'Invoice #' + invoice.id +
+                        ' | Qty: ' + invoice.quantity +
+                        '<br>';
+                });
+
+                Swal.fire({
+                    title: 'Pending Invoices Found',
+                    html:
+                        '<p>This product is used in active invoices:</p>' +
+                        invoiceList +
+                        '<br><b>Deleting this product will also delete these invoices.</b>',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Proceed Anyway'
+                }).then((result)=>{
+
+                    if(result.isConfirmed){
+
+                        Swal.fire({
+                            title: 'Final Confirmation',
+                            text: 'This action cannot be undone.',
+                            icon: 'error',
+                            showCancelButton: true,
+                            confirmButtonText: 'Delete Product & Invoices'
+                        }).then((finalResult)=>{
+
+                            if(finalResult.isConfirmed){
+
+                                $.ajax({
+                                    url: url,
+                                    type: 'DELETE',
+                                    data: {
+                                        _token: $('meta[name="csrf-token"]').attr('content'),
+                                        force_delete: true
+                                    },
+
+                                    success: function(res){
+
+                                        Swal.fire(
+                                            'Deleted!',
+                                            res.message,
+                                            'success'
+                                        ).then(()=>{
+                                            location.reload();
+                                        });
+
+                                    }
+                                });
+
+                            }
+
+                        });
+
+                    }
+
+                });
+
+                return;
             }
 
-        });
+            Swal.fire(
+                'Deleted!',
+                response.message,
+                'success'
+            ).then(()=>{
+                location.reload();
+            });
 
+        }
     });
 
 });
-
 </script>
 
 @endpush

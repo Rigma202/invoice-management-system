@@ -279,3 +279,13 @@ table.table-orange thead th:first-child {
 table.table-orange thead th:last-child {
     border-top-right-radius: 12px;
 }
+.view-reason-btn {
+    background-color: #87CEEB;
+    color: #141313;
+    border: 1px solid #6bb6d6;
+}
+
+.view-reason-btn:hover {
+    background-color: #6bb6d6;
+    color: #fff;
+}

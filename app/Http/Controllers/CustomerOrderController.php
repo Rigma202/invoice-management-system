@@ -22,6 +22,7 @@ class CustomerOrderController extends Controller
         $customer = auth()->user()->customer;
 
         $orders = Invoice::with('product')
+            ->withTrashed()
             ->where('customer_id', $customer->id)
             ->whereIn('status', ['completed', 'rejected'])
             ->latest()
