@@ -22,7 +22,7 @@
         <div class="bg-dark text-white p-3" style="width:250px; min-height:100vh;">
 
             @if(auth()->user()->role === 'admin')
-            <h4 class="mb-4">Admin Panel</h4>
+            <h4 class="mb-4" style="color:#C19A6B;">Admin Panel</h4>
 
             <ul class="nav flex-column">
 
@@ -45,7 +45,7 @@
                 @endif
 
                 @if(auth()->user()->role === 'staff')
-                <h3 class="mb-4">Staff Panel</h3>
+                <h3 class="mb-4" style="color:#C19A6B;">Staff Panel</h3>
 
                 <ul class="nav flex-column">
 
@@ -71,6 +71,22 @@
                     </li>
                     @endif
 
+                @if(auth()->user()->role === 'customer')
+                <h4 class="mb-4" style="color:#C19A6B;">Customer Panel</h4>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a href="{{ route('orders') }}" class="nav-link text-white">
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="" class="nav-link text-white">
+                            History
+                        </a>
+                    </li>
+                </ul>
+                @endif
                 </ul>
         </div>
 

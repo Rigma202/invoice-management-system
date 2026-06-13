@@ -8,10 +8,14 @@ class Customer extends Model
 {
 
 
-    protected $fillable = ['name', 'email', 'phone', 'address'];
+    protected $fillable = [  'user_id','name', 'email', 'phone', 'address'];
 
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

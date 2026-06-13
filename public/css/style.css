@@ -143,3 +143,14 @@ table.table-light-yellow thead th:last-child {
 .table-dark-green tbody tr:hover {
     background-color: #D8F3DC;
 }
+
+.active-nav {
+    background-color: #C19A6B !important;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    background-color: rgba(193, 154, 107, 0.3);
+    border-radius: 6px;
+}

@@ -52,10 +52,13 @@
                         data-id="{{ $invoice->id }}">
                         View
                     </button>
-                    <a href="{{ route('invoices.edit', $invoice->id) }}"
-                    class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
+
+                    @if($invoice->status !== 'completed')
+                        <a href="{{ route('invoices.edit', $invoice->id) }}"
+                        class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                    @endif
 
                     <form method="POST"
                         action="{{ route('invoices.destroy', $invoice->id) }}"

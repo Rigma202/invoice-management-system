@@ -27,6 +27,7 @@ class ProfileController extends Controller
                 return match ($user->role) {
                     'admin' => view('admin.dashboard'),
                     'staff' => view('staff.dashboard'),
+                    'customer' => view('customer-login.dashboard'),
                     default => abort(403),
                 };
         }
